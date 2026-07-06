@@ -31,4 +31,4 @@ jobs:
         env:
           ANSIBLE_CONFIG: ansible.cfg
         run: |
-          ansible-lint ../.ansible-lint playbooks
+          ansible-lint
