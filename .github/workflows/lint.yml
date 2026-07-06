@@ -30,4 +30,3 @@ jobs:
         working-directory: ansible
         run: |
           ansible-lint ../.ansible-lint playbooks
-
