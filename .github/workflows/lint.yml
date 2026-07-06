@@ -10,6 +10,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -17,14 +18,15 @@ jobs:
         with:
           python-version: "3.12"
 
-      - run: |
+      - name: Install dependencies
+        run: |
           pip install ansible ansible-lint yamllint
 
-      - run: |
+      - name: Lint YAML
+        run: |
           yamllint .
 
-      - run: |
-          ansible-lint
-
-        env:
-          ANSIBLE_ROLES_PATH: ./ansible/roles
+      - name: Lint Ansible
+        working-directory: ansible
+        run: |
+          ansible-lint ../.ansible-lint playbooks
