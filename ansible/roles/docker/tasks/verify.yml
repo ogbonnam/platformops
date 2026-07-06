@@ -1,0 +1,11 @@
+---
+- name: Gather Docker information
+  community.docker.docker_host_info:
+  register: docker_info
+
+- name: Verify Docker is running
+  ansible.builtin.assert:
+    that:
+      - docker_info.host_info.ServerVersion is defined
+    fail_msg: "Docker is not running correctly."
+    success_msg: "Docker installation verified successfully."

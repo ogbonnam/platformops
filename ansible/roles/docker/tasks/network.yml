@@ -1,0 +1,6 @@
+---
+- name: Create shared Docker network
+  community.docker.docker_network:
+    name: "{{ docker.network.name }}"
+    driver: "{{ docker.network.driver }}"
+    state: present
