@@ -3,6 +3,6 @@
   ansible.builtin.apt:
     name: "{{ item.value }}"
     state: present
-  loop: "{{ packages | dict2items }}"
+  loop: "{{ common_packages | dict2items }}"
   loop_control:
     label: "{{ item.key }}"

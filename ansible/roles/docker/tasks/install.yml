@@ -1,7 +1,7 @@
 ---
 - name: Install Docker packages
   ansible.builtin.apt:
-    name: "{{ docker.packages }}"
+    name: "{{ docker_settings.packages }}"
     state: present
 
 - name: Ensure Docker service is enabled
@@ -12,6 +12,6 @@
 
 - name: Add platform user to docker group
   ansible.builtin.user:
-    name: "{{ platform.user }}"
+    name: "{{ docker_platform.user }}"
     groups: docker
     append: true

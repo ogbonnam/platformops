@@ -1,12 +1,12 @@
 ---
 - name: Handle system updates and reboots
-  import_tasks: update.yml
+  ansible.builtin.import_tasks: update.yml
 
 - name: Install grouped system packages
-  import_tasks: packages.yml
+  ansible.builtin.import_tasks: packages.yml
 
 - name: Configure system regional settings
-  import_tasks: timezone.yml
+  ansible.builtin.import_tasks: timezone.yml
 
 - name: Provision system users and permissions
-  import_tasks: users.yml
+  ansible.builtin.import_tasks: users.yml

@@ -1,13 +1,13 @@
 ---
-platform:
+common_platform:
   user: platformops
   group: platformops
   home: /home/platformops
 
-system:
+common_system:
   timezone: UTC
 
-packages:
+common_packages:
   base:
     - apt-transport-https
     - ca-certificates

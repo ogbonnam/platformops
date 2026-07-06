@@ -1,8 +1,8 @@
 ---
-platform:
+docker_platform:
   user: platformops
 
-docker:
+docker_settings:
   apt_repository: >-
     deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc]
     https://download.docker.com/linux/ubuntu
