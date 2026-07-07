@@ -1,0 +1,8 @@
+---
+- name: Create tenant specific PostgreSQL persistent bind mount directory
+  ansible.builtin.file:
+    path: "/opt/platformops/{{ company.short_name | default('platformops') }}/postgres"
+    state: directory
+    owner: "{{ global_platform.user }}"
+    group: "{{ global_platform.group }}"
+    mode: "0755"

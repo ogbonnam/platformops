@@ -1,17 +1,37 @@
 ---
-- name: Install Docker packages
+- name: Install Docker Engine packages via apt
   ansible.builtin.apt:
     name: "{{ docker_settings.packages }}"
     state: present
 
-- name: Ensure Docker service is enabled
+- name: Ensure Docker system configuration directory exists
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Configure Docker engine daemon JSON specifications
+  ansible.builtin.template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Docker
+
+- name: Force immediate execution of triggered handlers to cycle Docker engine
+  ansible.builtin.meta: flush_handlers
+
+- name: Ensure Docker systemd service is enabled and active
   ansible.builtin.service:
     name: docker
     enabled: true
     state: started
 
-- name: Add platform user to docker group
+- name: Add platform administrator user to system docker unix group
   ansible.builtin.user:
-    name: "{{ docker_platform.user }}"
+    name: "{{ global_platform.user }}"
     groups: docker
     append: true

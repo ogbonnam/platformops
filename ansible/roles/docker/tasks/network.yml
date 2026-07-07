@@ -1,6 +1,6 @@
 ---
 - name: Create shared Docker network
   community.docker.docker_network:
-    name: "{{ docker_settings.network.name }}"
+    name: "{{ company.short_name | default('platformops') }}-network"
     driver: "{{ docker_settings.network.driver }}"
     state: present

@@ -11,11 +11,6 @@
     - docker
     - docker-install
 
-- name: Configure Docker daemon
-  ansible.builtin.import_tasks: daemon.yml
-  tags:
-    - docker
-    - docker-daemon
 
 - name: Initialize platform network layer
   ansible.builtin.import_tasks: network.yml

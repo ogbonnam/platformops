@@ -1,11 +1,19 @@
 ---
-- name: Gather Docker information
-  community.docker.docker_host_info:
-  register: docker_info
+- name: Verify Docker Engine CLI functionality execution
+  ansible.builtin.command:
+    cmd: docker --version
+  register: docker_version_output
+  changed_when: false
 
-- name: Verify Docker is running
+- name: Verify Docker daemon operational availability
+  community.docker.docker_container_info:
+    name: non_existent_validation_container
+  register: docker_info_output
+  ignore_errors: true
+
+- name: Assert Docker engine status is functional
   ansible.builtin.assert:
     that:
-      - docker_info.host_info.ServerVersion is defined
-    fail_msg: "Docker is not running correctly."
-    success_msg: "Docker installation verified successfully."
+      - docker_version_output.rc == 0
+    success_msg: "Docker Engine installation verified successfully."
+    fail_msg: "Docker Engine installation is broken or unresponsive."

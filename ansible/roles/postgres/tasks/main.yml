@@ -1,0 +1,16 @@
+---
+- name: Execute pre-flight parameter validation checks
+  ansible.builtin.import_tasks: validate.yml
+  tags: [postgres, validate]
+
+- name: Ensure PostgreSQL runtime file engines exist
+  ansible.builtin.import_tasks: directories.yml
+  tags: [postgres, directories]
+
+- name: Deploy declarative database service container
+  ansible.builtin.import_tasks: deploy.yml
+  tags: [postgres, deploy]
+
+- name: Perform automated database engine health verification
+  ansible.builtin.import_tasks: verify.yml
+  tags: [postgres, verify]

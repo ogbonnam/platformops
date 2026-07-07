@@ -1,0 +1,15 @@
+---
+- name: Get Traefik container info
+  community.docker.docker_container_info:
+    name: "{{ traefik_settings.container_name }}"
+  register: traefik_container
+  check_mode: false
+
+- name: Verify Traefik is running
+  ansible.builtin.assert:
+    that:
+      - traefik_container.exists
+      - traefik_container.container.State.Running
+    success_msg: "Traefik container instance verified running perfectly."
+    fail_msg: "Traefik container is missing or failed to start up cleanly."
+  when: not ansible_check_mode

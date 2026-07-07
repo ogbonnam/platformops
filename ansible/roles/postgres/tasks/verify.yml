@@ -1,0 +1,24 @@
+---
+- name: Wait for PostgreSQL container to become healthy
+  community.docker.docker_container_info:
+    name: "{{ company.short_name | default('platformops') }}-postgres"
+  register: postgres_container
+  until:
+    - postgres_container.exists
+    - postgres_container.container.State.Running
+    - postgres_container.container.State.Health.Status == "healthy"
+  retries: 30
+  delay: 2
+  changed_when: false
+  check_mode: false
+  when: not ansible_check_mode
+
+- name: Verify PostgreSQL container is active and responding to health signals
+  ansible.builtin.assert:
+    that:
+      - postgres_container.exists
+      - postgres_container.container.State.Running
+      - postgres_container.container.State.Health.Status == "healthy"
+    success_msg: "PostgreSQL engine instance is online and running successfully."
+    fail_msg: "PostgreSQL engine startup failed, unhealthy, or timed out."
+  when: not ansible_check_mode

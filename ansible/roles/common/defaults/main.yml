@@ -1,9 +1,4 @@
 ---
-common_platform:
-  user: platformops
-  group: platformops
-  home: /home/platformops
-
 common_system:
   timezone: UTC
 

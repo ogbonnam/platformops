@@ -1,0 +1,13 @@
+---
+# Global architecture standards accessed by all roles
+global_platform:
+  user: platformops
+  group: platformops
+  home: /home/platformops
+
+# Centralized immutable infrastructure image tag catalog
+global_image_catalog:
+  traefik: "traefik:v3.5"
+  postgres: "postgres:17"
+  redis: "redis:8"
+  mattermost: "mattermost/mattermost-team-edition:latest"
