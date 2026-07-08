@@ -1,0 +1,7 @@
+---
+- name: Restart Nextjs application container
+  community.docker.docker_container:
+    name: "{{ company.short_name | default('platformops') }}-{{ nextjs_settings.container_name_suffix }}"
+    image: "{{ customer_apps.nextjs.image }}"
+    state: started
+    restart: true

@@ -1,0 +1,23 @@
+- name: Deploy isolated multi-tenant Next.js application core web container
+  community.docker.docker_container:
+    name: "{{ company.short_name | default('platformops') }}-{{ nextjs_settings.container_name_suffix }}"
+    image: "ghcr.io/{{ github.owner }}/{{ company.short_name }}-{{ customer_apps.nextjs.repository }}:{{ customer_apps.nextjs.tag }}"
+    pull: true
+    restart_policy: "{{ global_docker_defaults.restart_policy }}"
+    state: started
+    recreate: false
+    networks:
+      - name: "{{ company.short_name | default('platformops') }}-network"
+    env_file: "{{ global_platform.data_root }}/{{ company.short_name | default('platformops') }}/nextjs/.env"
+    volumes:
+      - "{{ global_platform.data_root }}/{{ company.short_name | default('platformops') }}/nextjs/logs:/app/logs"
+    memory: "1g"
+    cpus: 1.0
+    log_driver: "{{ global_docker_defaults.logging.driver }}"
+    log_options: "{{ global_docker_defaults.logging.options }}"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.next.rule: "Host(`{{ customer_apps.nextjs.hostname }}`)"
+      traefik.http.routers.next.entrypoints: "{{ nextjs_settings.traefik.entrypoint }}"
+      traefik.http.routers.next.tls.certresolver: "{{ nextjs_settings.traefik.certresolver }}"
+      traefik.http.services.next.loadbalancer.server.port: "{{ nextjs_settings.port | string }}"

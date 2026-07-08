@@ -1,0 +1,15 @@
+---
+- name: Gather Next.js application container deployment runtime info
+  community.docker.docker_container_info:
+    name: "{{ company.short_name | default('platformops') }}-{{ nextjs_settings.container_name_suffix }}"
+  register: nextjs_container
+  check_mode: false
+
+- name: Enforce container active execution verification checks
+  ansible.builtin.assert:
+    that:
+      - nextjs_container.exists
+      - nextjs_container.container.State.Running
+    fail_msg: "Next.js application engine web service container failed to initialize cleanly."
+    success_msg: "Next.js application engine core container verification successful."
+  when: not ansible_check_mode

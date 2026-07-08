@@ -1,0 +1,20 @@
+---
+- name: Execute pre-flight parameters checks
+  ansible.builtin.import_tasks: validate.yml
+  tags: [nextjs, validate]
+
+- name: Construct standard tenant system folders
+  ansible.builtin.import_tasks: directories.yml
+  tags: [nextjs, directories]
+
+- name: Deploy application environment layout configs
+  ansible.builtin.import_tasks: env.yml
+  tags: [nextjs, config]
+
+- name: Stand up runtime web application instance container
+  ansible.builtin.import_tasks: deploy.yml
+  tags: [nextjs, deploy]
+
+- name: Run health checking loops
+  ansible.builtin.import_tasks: verify.yml
+  tags: [nextjs, verify]

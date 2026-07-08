@@ -1,0 +1,9 @@
+---
+- name: Validate that customer Next.js deployment image specifications are populated
+  ansible.builtin.assert:
+    that:
+      - customer_apps.nextjs.image is defined
+      - customer_apps.nextjs.image | length > 5
+      - customer_apps.nextjs.hostname is defined
+    fail_msg: "FATAL ERROR: Customer Next.js target container image or hostname is unconfigured."
+    success_msg: "Customer Next.js configuration profiles validated."

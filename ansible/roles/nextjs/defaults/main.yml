@@ -1,0 +1,7 @@
+---
+nextjs_settings:
+  container_name_suffix: "nextjs"
+  port: 3000
+  traefik:
+    entrypoint: "websecure"
+    certresolver: "letsencrypt"

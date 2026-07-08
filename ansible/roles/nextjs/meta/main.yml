@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: George Enueshike
+  description: Multi-tenant isolated Next.js frontend application runtime layer
+  min_ansible_version: "2.17"
+  license: MIT
+  platforms:
+    - name: Ubuntu
+      versions:
+        - noble
+dependencies: []
