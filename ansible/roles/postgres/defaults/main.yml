@@ -1,8 +1,9 @@
----
 postgres_settings:
-  database: app
-  username: app
+  database: postgres
+  username: postgres
+
   restart_policy: unless-stopped
+
   resources:
     memory: "1g"
     cpus: 1.0

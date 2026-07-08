@@ -1,0 +1,19 @@
+---
+- name: Create Mattermost directories
+  ansible.builtin.file:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mattermost/{{ item }}"
+    state: directory
+    owner: "{{ global_platform.user }}"
+    group: "{{ global_platform.group }}"
+    mode: "0775"
+  loop:
+    - config
+    - data
+    - logs
+    - plugins
+
+- name: Set Mattermost directory permissions
+  ansible.builtin.file:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mattermost"
+    recurse: true
+    mode: "0775"

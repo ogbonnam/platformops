@@ -1,0 +1,16 @@
+---
+- name: Build multi-tenant service standard data directories
+  ansible.builtin.import_tasks: directories.yml
+  when: customer_services.mattermost.enabled | default(false)
+
+- name: Render environment variables configuration profile blocks
+  ansible.builtin.import_tasks: configuration.yml
+  when: customer_services.mattermost.enabled | default(false)
+
+- name: Execute platform core workspace deployment containers
+  ansible.builtin.import_tasks: deploy.yml
+  when: customer_services.mattermost.enabled | default(false)
+
+- name: Run automated functional application verification checks
+  ansible.builtin.import_tasks: verify.yml
+  when: customer_services.mattermost.enabled | default(false)

@@ -1,7 +1,9 @@
 - name: Deploy isolated multi-tenant Next.js application core web container
   community.docker.docker_container:
     name: "{{ company.short_name | default('platformops') }}-{{ nextjs_settings.container_name_suffix }}"
-    image: "ghcr.io/{{ github.owner }}/{{ company.short_name }}-{{ customer_apps.nextjs.repository }}:{{ customer_apps.nextjs.tag }}"
+    image: >-
+      ghcr.io/{{ github.owner }}/{{ company.short_name }}-{{
+      customer_apps.nextjs.repository }}:{{ customer_apps.nextjs.tag }}
     pull: true
     restart_policy: "{{ global_docker_defaults.restart_policy }}"
     state: started

@@ -2,6 +2,7 @@
 - name: Restart Nextjs application container
   community.docker.docker_container:
     name: "{{ company.short_name | default('platformops') }}-{{ nextjs_settings.container_name_suffix }}"
-    image: "{{ customer_apps.nextjs.image }}"
+    image: >-
+      ghcr.io/{{ github.owner }}/{{ company.short_name }}-{{ customer_apps.nextjs.repository }}:{{ customer_apps.nextjs.tag }}
     state: started
     restart: true

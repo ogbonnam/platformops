@@ -1,0 +1,13 @@
+---
+- name: Gather Mattermost container info
+  community.docker.docker_container_info:
+    name: "{{ company.id }}-mattermost"
+  register: mattermost_container
+
+- name: Verify Mattermost is running
+  ansible.builtin.assert:
+    that:
+      - mattermost_container.exists
+      - mattermost_container.container.State.Running
+    fail_msg: "Mattermost failed to start."
+    success_msg: "Mattermost is running."

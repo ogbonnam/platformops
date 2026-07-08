@@ -1,0 +1,8 @@
+---
+- name: Deploy dynamic environment profile for Mattermost container engine
+  ansible.builtin.template:
+    src: env.j2
+    dest: "{{ global_platform.data_root }}/{{ company.id }}/mattermost/.env"
+    owner: "{{ global_platform.user }}"
+    group: "{{ global_platform.group }}"
+    mode: "0600"

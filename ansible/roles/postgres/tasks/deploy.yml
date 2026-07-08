@@ -10,7 +10,9 @@
       - name: "{{ company.short_name | default('platformops') }}-network"
     env_file: "{{ global_platform.data_root }}/{{ company.short_name | default('platformops') }}/postgres/.env"
     volumes:
-      - "{{ global_platform.data_root }}/{{ company.short_name | default('platformops') }}/postgres/data:/var/lib/postgresql/data"
+      - >-
+        {{ global_platform.data_root }}/{{ company.short_name | default('platformops')
+        }}/postgres/data:/var/lib/postgresql/data
     memory: "{{ postgres_settings.resources.memory }}"
     cpus: "{{ postgres_settings.resources.cpus }}"
     log_driver: "{{ global_docker_defaults.logging.driver }}"

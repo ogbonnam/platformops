@@ -1,0 +1,46 @@
+---
+- name: Wait for PostgreSQL to accept connections
+  community.docker.docker_container_exec:
+    container: "{{ company.short_name }}-postgres"
+    command: >-
+      pg_isready -U postgres
+  register: pg_ready
+  retries: 30
+  delay: 2
+  until: pg_ready.rc == 0
+
+- name: Create Mattermost database user
+  community.docker.docker_container_exec:
+    container: "{{ company.short_name }}-postgres"
+    command: >-
+      psql -U postgres -tc
+      "SELECT 1 FROM pg_roles WHERE rolname='{{ mattermost_settings.db.user }}';"
+  register: mm_user_exists
+  changed_when: false
+
+- name: Ensure Mattermost user exists
+  community.docker.docker_container_exec:
+    container: "{{ company.short_name }}-postgres"
+    command: >-
+      psql -U postgres -c
+      "CREATE USER {{ mattermost_settings.db.user }}
+      WITH PASSWORD '{{ mattermost_secrets.db_password }}';"
+  when: mm_user_exists.stdout | trim == ""
+
+- name: Check Mattermost database
+  community.docker.docker_container_exec:
+    container: "{{ company.short_name }}-postgres"
+    command: >-
+      psql -U postgres -tc
+      "SELECT 1 FROM pg_database WHERE datname='{{ mattermost_settings.db.name }}';"
+  register: mm_db_exists
+  changed_when: false
+
+- name: Create Mattermost database
+  community.docker.docker_container_exec:
+    container: "{{ company.short_name }}-postgres"
+    command: >-
+      psql -U postgres -c
+      "CREATE DATABASE {{ mattermost_settings.db.name }}
+      OWNER {{ mattermost_settings.db.user }};"
+  when: mm_db_exists.stdout | trim == ""

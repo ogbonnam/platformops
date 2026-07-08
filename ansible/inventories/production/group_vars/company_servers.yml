@@ -1,17 +1,41 @@
 ---
 # Tenant Identifier Context
 company:
+  id: acme
   short_name: acme
+  name: Acme Ltd
+  domain: martins.noblehall.com
 
 # Tenant Application Catalog Matrix
 github:
   owner: georgeenueshike
 
+customer_services:
+  mattermost:
+    enabled: true
+    hostname: "chat.{{ company.domain }}"
+    resources:
+      memory: "2g"
+      cpus: 1.5
+  mailcow:
+    enabled: true
+    hostname: "mail.{{ company.domain }}"
+    timezone: "Africa/Lagos"
+    skip_clamd: "y"  # Heavily reduces RAM usage on smaller VPS hosts
+    skip_solr: "y"
+
 customer_apps:
   nextjs:
     repository: website
     tag: v1.0.0
+    hostname: martins.noblehall.com
 
 # Secrets Layer (Will become Ansible Vaulted)
 postgres_secrets:
   password: "password"
+
+mattermost_secrets:
+  db_password: "password"
+
+mailcow_secrets:
+  db_password: "password"

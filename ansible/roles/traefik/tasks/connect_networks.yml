@@ -1,0 +1,7 @@
+---
+- name: Connect Traefik to tenant network
+  community.docker.docker_network:
+    name: "{{ company.id }}-network"
+    connected:
+      - traefik
+    appends: true

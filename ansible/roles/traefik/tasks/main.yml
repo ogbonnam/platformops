@@ -15,6 +15,10 @@
   ansible.builtin.import_tasks: deploy.yml
   tags: [traefik, deploy]
 
+- name: Connect traefik to other tenant network too
+  ansible.builtin.import_tasks: connect_networks.yml
+  tags: [traefik, connect_networks]
+
 - name: Perform automated service verification
   ansible.builtin.import_tasks: verify.yml
   tags: [traefik, verify]

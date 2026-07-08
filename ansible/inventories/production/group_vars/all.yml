@@ -8,7 +8,7 @@ global_platform:
 
 # Centralized immutable infrastructure image tag catalog (Strictly Pinned)
 global_image_catalog:
-  traefik: "traefik:v3.5.3"
+  traefik: "traefik:v3.6.1"
   postgres: "postgres:17.6"
   redis: "redis:8.2.1"
   mattermost: "mattermost/mattermost-team-edition:10.12.0"

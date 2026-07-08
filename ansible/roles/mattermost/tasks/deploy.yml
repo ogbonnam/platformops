@@ -1,0 +1,40 @@
+---
+- name: Deploy Mattermost
+  community.docker.docker_container:
+
+    name: "{{ company.id }}-mattermost"
+
+    image: "{{ global_image_catalog.mattermost }}"
+
+    pull: true
+
+    state: started
+
+    restart_policy: unless-stopped
+
+    recreate: false
+
+    env_file: "{{ global_platform.data_root }}/{{ company.id }}/mattermost/.env"
+
+    networks:
+      - name: "{{ company.id }}-network"
+
+    volumes:
+      - "{{ global_platform.data_root }}/{{ company.id }}/mattermost/config:/mattermost/config"
+      - "{{ global_platform.data_root }}/{{ company.id }}/mattermost/data:/mattermost/data"
+      - "{{ global_platform.data_root }}/{{ company.id }}/mattermost/logs:/mattermost/logs"
+      - "{{ global_platform.data_root }}/{{ company.id }}/mattermost/plugins:/mattermost/plugins"
+
+    labels:
+
+      traefik.enable: "true"
+
+      traefik.docker.network: "{{ company.id }}-network"
+
+      traefik.http.routers.mattermost.rule: "Host(`{{ customer_services.mattermost.hostname }}`)"
+
+      traefik.http.routers.mattermost.entrypoints: "{{ mattermost_settings.traefik.entrypoint }}"
+
+      traefik.http.routers.mattermost.tls.certresolver: "{{ mattermost_settings.traefik.certresolver }}"
+
+      traefik.http.services.mattermost.loadbalancer.server.port: "8065"

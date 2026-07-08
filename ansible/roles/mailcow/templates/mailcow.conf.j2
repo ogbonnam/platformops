@@ -1,0 +1,11 @@
+MAILCOW_HOSTNAME={{ customer_services.mailcow.hostname }}
+LOCAL_TZ={{ customer_services.mailcow.timezone | default('UTC') }}
+DBNAME=mailcow
+DBUSER=mailcow
+DBPASS={{ mailcow_secrets.db_password }}
+SKIP_CLAMD={{ customer_services.mailcow.skip_clamd | default('n') }}
+SKIP_SOLR={{ customer_services.mailcow.skip_solr | default('y') }}
+HTTP_PORT=8080
+HTTP_BIND=127.0.0.1
+HTTPS_PORT=8443
+HTTPS_BIND=127.0.0.1

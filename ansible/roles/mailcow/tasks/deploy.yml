@@ -1,0 +1,6 @@
+---
+- name: Instantiate core Mailcow unified mail server stacks using Compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ global_platform.data_root }}/{{ company.id }}/mailcow"
+    state: present
+    pull: always

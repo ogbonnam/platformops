@@ -1,0 +1,8 @@
+---
+- name: Deploy dynamic configurations manifest target file for Mailcow instance
+  ansible.builtin.template:
+    src: mailcow.conf.j2
+    dest: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    owner: "root"
+    group: "root"
+    mode: "0600"

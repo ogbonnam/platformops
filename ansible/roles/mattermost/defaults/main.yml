@@ -1,0 +1,13 @@
+---
+mattermost_settings:
+  container_name_suffix: mattermost
+
+  port: 8065
+
+  db:
+    name: mattermost
+    user: mmuser
+
+  traefik:
+    entrypoint: websecure
+    certresolver: letsencrypt

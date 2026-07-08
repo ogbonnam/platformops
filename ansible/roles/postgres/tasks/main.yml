@@ -18,3 +18,7 @@
 - name: Run external database engine socket readiness assertions
   ansible.builtin.import_tasks: verify.yml
   tags: [postgres, verify]
+
+- name: create users and databases for applications
+  ansible.builtin.import_tasks: databases.yml
+  tags: [postgres, databases]

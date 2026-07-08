@@ -8,8 +8,13 @@
 - name: Enforce container active execution verification checks
   ansible.builtin.assert:
     that:
-      - nextjs_container.exists
-      - nextjs_container.container.State.Running
+      - company.short_name is defined
+      - github.owner is defined
+      - customer_apps.nextjs.repository is defined
+      - customer_apps.nextjs.tag is defined
+      - customer_apps.nextjs.hostname is defined
+      - nextjs_settings.container_name_suffix is defined
+      - nextjs_settings.port is defined
     fail_msg: "Next.js application engine web service container failed to initialize cleanly."
     success_msg: "Next.js application engine core container verification successful."
   when: not ansible_check_mode

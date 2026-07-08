@@ -1,0 +1,15 @@
+---
+- name: Ensure structural customer tenant corporate platform path exists
+  ansible.builtin.file:
+    path: "{{ global_platform.data_root }}/{{ company.id }}"
+    state: directory
+    owner: "{{ global_platform.user }}"
+    group: "{{ global_platform.group }}"
+    mode: "0755"
+
+- name: Clone authoritative upstream Mailcow core distribution repository
+  ansible.builtin.git:
+    repo: "{{ mailcow_settings.git_repo }}"
+    dest: "{{ global_platform.data_root }}/{{ company.id }}/mailcow"
+    version: "{{ mailcow_settings.git_version }}"
+    force: true

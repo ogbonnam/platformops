@@ -4,7 +4,14 @@
   become: true
   gather_facts: true
 
+  pre_tasks:
+    - name: Debug and inspect tenant service states
+      ansible.builtin.debug:
+        var: customer_services
+
   roles:
     - docker
     - traefik
     - postgres
+    - mattermost
+    - mailcow

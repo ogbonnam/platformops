@@ -1,0 +1,15 @@
+---
+- name: Verify that core postfix service container instances are operational
+  community.docker.docker_container_info:
+    name: "mailcow-postfix-mailcow-1"
+  register: postfix_container
+  check_mode: false
+
+- name: Enforce Mailcow application service active run status assertions
+  ansible.builtin.assert:
+    that:
+      - postfix_container.exists
+      - postfix_container.container.State.Running
+    fail_msg: "Mailcow application container group structural elements failed to cycle up."
+    success_msg: "Mailcow secure email exchange core components validated successfully."
+  when: not ansible_check_mode
