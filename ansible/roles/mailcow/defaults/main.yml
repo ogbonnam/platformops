@@ -1,4 +1,4 @@
 ---
 mailcow_settings:
-  git_repo: "https://github.com/mailcow/mailcow-dockerized.git"
-  git_version: "master"
+  git_repo: https://github.com/mailcow/mailcow-dockerized.git
+  git_version: "2025-09"

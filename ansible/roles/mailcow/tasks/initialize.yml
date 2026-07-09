@@ -1,0 +1,11 @@
+---
+- name: Check whether Mailcow configuration already exists
+  ansible.builtin.stat:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+  register: mailcow_conf
+
+- name: Generate default Mailcow configuration
+  ansible.builtin.command:
+    cmd: ./generate_config.sh
+    chdir: "{{ global_platform.data_root }}/{{ company.id }}/mailcow"
+  when: not mailcow_conf.stat.exists

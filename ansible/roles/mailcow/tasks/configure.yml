@@ -1,8 +1,48 @@
 ---
-- name: Deploy dynamic configurations manifest target file for Mailcow instance
-  ansible.builtin.template:
-    src: mailcow.conf.j2
-    dest: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
-    owner: "root"
-    group: "root"
-    mode: "0600"
+- name: Configure Mailcow hostname
+  ansible.builtin.lineinfile:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    regexp: '^MAILCOW_HOSTNAME='
+    line: "MAILCOW_HOSTNAME={{ customer_services.mailcow.hostname }}"
+
+- name: Configure timezone
+  ansible.builtin.lineinfile:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    regexp: '^TZ='
+    line: "TZ={{ customer_services.mailcow.timezone }}"
+
+- name: Configure HTTP port
+  ansible.builtin.lineinfile:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    regexp: '^HTTP_PORT='
+    line: "HTTP_PORT=8080"
+
+- name: Configure HTTPS port
+  ansible.builtin.lineinfile:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    regexp: '^HTTPS_PORT='
+    line: "HTTPS_PORT=8443"
+
+- name: Configure HTTP bind address
+  ansible.builtin.lineinfile:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    regexp: '^HTTP_BIND='
+    line: "HTTP_BIND=127.0.0.1"
+
+- name: Configure HTTPS bind address
+  ansible.builtin.lineinfile:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    regexp: '^HTTPS_BIND='
+    line: "HTTPS_BIND=127.0.0.1"
+
+- name: Configure ClamAV
+  ansible.builtin.lineinfile:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    regexp: '^SKIP_CLAMD='
+    line: "SKIP_CLAMD={{ customer_services.mailcow.skip_clamd }}"
+
+- name: Configure Solr
+  ansible.builtin.lineinfile:
+    path: "{{ global_platform.data_root }}/{{ company.id }}/mailcow/mailcow.conf"
+    regexp: '^SKIP_SOLR='
+    line: "SKIP_SOLR={{ customer_services.mailcow.skip_solr }}"

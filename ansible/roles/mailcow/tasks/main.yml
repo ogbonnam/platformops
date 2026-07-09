@@ -1,16 +1,15 @@
 ---
-- name: Synchronize authoritative codebase repositories from upstream distribution sources
-  ansible.builtin.import_tasks: install.yml
+- import_tasks: install.yml
   when: customer_services.mailcow.enabled | default(false)
 
-- name: Instantiate localized runtime configuration parameters parameters
-  ansible.builtin.import_tasks: configure.yml
+- import_tasks: initialize.yml
   when: customer_services.mailcow.enabled | default(false)
 
-- name: Trigger orchestration service loops across active Compose clusters
-  ansible.builtin.import_tasks: deploy.yml
+- import_tasks: configure.yml
   when: customer_services.mailcow.enabled | default(false)
 
-- name: Validate post deployment functional service check assertions
-  ansible.builtin.import_tasks: verify.yml
+- import_tasks: deploy.yml
+  when: customer_services.mailcow.enabled | default(false)
+
+- import_tasks: verify.yml
   when: customer_services.mailcow.enabled | default(false)

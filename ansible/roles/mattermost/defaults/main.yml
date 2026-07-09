@@ -1,6 +1,8 @@
 ---
 mattermost_settings:
   container_name_suffix: mattermost
+  uid: 2000
+  gid: 2000
 
   port: 8065
 

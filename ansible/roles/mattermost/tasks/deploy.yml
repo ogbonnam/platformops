@@ -12,10 +12,11 @@
 
     restart_policy: unless-stopped
 
-    recreate: false
+    recreate: true
 
     env_file: "{{ global_platform.data_root }}/{{ company.id }}/mattermost/.env"
 
+    
     networks:
       - name: "{{ company.id }}-network"
 

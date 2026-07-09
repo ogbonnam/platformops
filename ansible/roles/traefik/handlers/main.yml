@@ -4,4 +4,4 @@
     name: "{{ traefik_settings.container_name }}"
     image: "{{ global_image_catalog.traefik }}"
     state: started
-    restart: true
+    recreate: true

@@ -7,7 +7,7 @@
       - "--configFile=/traefik.yml"
     restart_policy: unless-stopped
     state: started
-    recreate: false
+    recreate: true
 
     networks:
       - name: "{{ traefik_settings.network }}"
